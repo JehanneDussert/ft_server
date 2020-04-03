@@ -1,19 +1,19 @@
-Image utilisée comme base de notre image :
-FROM debian:9
-USER jdussert@student.42.fr
+FROM debian:buster
+MAINTAINER jdussert <jdussert@student.42.fr>
 
-Commandes à effectuer dans notre conteneur
-RUN apt-get update -yq \
-&& apt-get install curl gnupg -yq \
-&& curl -sL https://deb.nodesource.com/setup_10.x | bash \
-&& apt-get install nodejs -yq \
+RUN apt-get update -y \
+apt-get upgrade -y \
+&& apt-get -y install nginx \ # NGINX
+&& apt-get -y install mariadb-server \ # MySQL
+&& apt-get -y install php7.3 php-mysql php-fpm php-cli php-mbstring \ # Php
+&& apt-get -y install wget \ # Tools
 && apt-get clean -y
 
-Copier contenu depuis machine vers image docker en cours de construction
-ADD . /srcs/
-
-Specifier notre repertoire courant pour la suite
+ADD ./srcs/wordpress_config.php
 WORKDIR /srcs
+RUN npm install
 
-Définir la commande lancée par conteneur lors de son execution
+EXPOSE 2368
+VOLUME /srcs
+
 CMD npm run start
