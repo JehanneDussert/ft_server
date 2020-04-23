@@ -27,4 +27,18 @@ server {
 				deny all;
 				}
     }
+	location /phpmyadmin {
+		index index.php;
+		location ~* ^.+.(jpg|jpeg|gif|css|png|js|ico|xml)$ {
+			access_log off;
+			expires 30d;
+			}
+			location ~ /\.ht {
+				deny all;
+				}
+				location ~ /(libraries|setup/frames|setup/libs) {
+					deny all;
+					return 404;
+					}
+				}
 }
