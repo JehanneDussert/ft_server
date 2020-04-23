@@ -31,5 +31,7 @@ RUN ln -s /etc/nginx/sites-available/nginx_config /etc/nginx/sites-enabled/ && \
 ADD /srcs/wordpress_config.php /var/www/html/wordpress
 RUN chown -R www-data:www-data /var/www/html/wordpress
 
+ADD /srcs/server.key /srcs
+    && /srcs/server.crt /srcs
 ADD /srcs/init.sh .
 ENTRYPOINT ["/bin/sh", "init.sh"]
