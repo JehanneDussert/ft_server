@@ -18,6 +18,12 @@ RUN wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-engl
     && mkdir /var/www/html/phpmyadmin \
     && tar xzf phpMyAdmin-4.9.0.1-english.tar.gz --strip-components=1 -C /var/www/html/phpmyadmin
 
+# Key and certificate
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+	-subj "/C=FR/ST=75/L=Paris/O=42/CN=jdussert" \
+	-keyout /tmp/server.key \
+	-out /tmp/server.crt
+
 # MySQL
 RUN apt-get -y install mariadb-server
 
@@ -31,7 +37,5 @@ RUN ln -s /etc/nginx/sites-available/nginx_config /etc/nginx/sites-enabled/ && \
 ADD /srcs/wordpress_config.php /var/www/html/wordpress
 RUN chown -R www-data:www-data /var/www/html/wordpress
 
-ADD /srcs/server.key /tmp/ \
-    && /srcs/server.crt /tmp/
 ADD /srcs/init.sh .
 ENTRYPOINT ["/bin/sh", "init.sh"]

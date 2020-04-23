@@ -7,6 +7,7 @@ server {
     ssl_certificate /tmp/server.crt;
     ssl_certificate_key /tmp/server.key;
 	location / {
+		autoindex on;
 	    index	index.php index.html;
 	    try_files	$uri $uri/ /index.php?$args;
 	}
