@@ -4,8 +4,8 @@ server {
 	server_name wordpress;
 
 	listen 443 ssl;
-    ssl_certificate /srcs/server.crt;
-    ssl_certificate_key /srcs/server.key;
+    ssl_certificate /tmp/server.crt;
+    ssl_certificate_key /tmp/server.key;
 	location / {
 	    index	index.php index.html;
 	    try_files	$uri $uri/ /index.php?$args;

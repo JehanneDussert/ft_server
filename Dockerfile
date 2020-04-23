@@ -1,7 +1,7 @@
 FROM debian:buster
 LABEL maintainer ="jdussert@student.42.fr"
 
-WORKDIR /srcs
+WORKDIR /tmp
 
 # Install update
 RUN apt-get update -y && apt-get upgrade -y
@@ -31,7 +31,7 @@ RUN ln -s /etc/nginx/sites-available/nginx_config /etc/nginx/sites-enabled/ && \
 ADD /srcs/wordpress_config.php /var/www/html/wordpress
 RUN chown -R www-data:www-data /var/www/html/wordpress
 
-ADD /srcs/server.key /srcs
-    && /srcs/server.crt /srcs
+ADD /srcs/server.key /tmp/ \
+    && /srcs/server.crt /tmp/
 ADD /srcs/init.sh .
 ENTRYPOINT ["/bin/sh", "init.sh"]
