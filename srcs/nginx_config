@@ -1,12 +1,15 @@
 server {
 	listen 80;
-	root /var/www/html/wordpress;
+	root /var/www/html;
 	server_name wordpress;
 
+	listen 443 ssl;
+    ssl_certificate /tmp/server.crt;
+    ssl_certificate_key /tmp/server.key;
 	location / {
 	    index	index.php index.html;
 	    try_files	$uri $uri/ /index.php?$args;
-	}	
+	}
 
 	location ~ \.php$ {
 		include snippets/fastcgi-php.conf;
